@@ -10,13 +10,13 @@ project:
   top_module:  "tt_um_systolic_top"
   
   source_files:
-    - "primitives.sv"
-    - "pe.sv"
-    - "systolic_array.sv"
-    - "control_fsm.sv"
-    - "spi_slave.sv"
-    - "spi_tx.sv"
-    - "tt_um_systolic_top.sv"
+    - "primitives.v"
+    - "pe.v"
+    - "systolic_array.v"
+    - "control_fsm.v"
+    - "spi_slave.v"
+    - "spi_tx.v"
+    - "tt_um_systolic_top.v"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 pinout:
