@@ -2,7 +2,7 @@ module spi_tx(
     input logic clk, rst_n,
     input logic sck, cs,
     input logic spi_tx_en,
-    input logic [19:0] acc [4][4],
+    input logic [9:0] acc [4][4],
     output logic miso,
     output logic spi_done
 );
@@ -38,10 +38,9 @@ module spi_tx(
 
             if (falling_edge && !cs_sync && spi_tx_en) begin
                 
-                shift_reg[15:0] <= {shift_reg[14:0], 1'd0};
                 bit_cnt <= bit_cnt + 1;
                 if (bit_cnt == 0) begin
-                    shift_reg <= acc[byte_cnt / 4][byte_cnt % 4][15:0];
+                    shift_reg <= {6'b0, acc[byte_cnt / 4][byte_cnt % 4]};
                 end else begin
                     shift_reg <= {shift_reg[14:0], 1'b0};
                 end

@@ -31,9 +31,9 @@ module tt_um_systolic_top (
 
   
     
-    logic [7:0] a_in [4][4];
-    logic [7:0] b_in [4][4];
-    logic [19:0] acc [4][4];
+    logic [3:0] a_in [4][4];
+    logic [3:0] b_in [4][4];
+    logic [9:0] acc [4][4];
 
     logic load_done, comp_done, spi_done;
     logic clear, start, spi_tx_en;

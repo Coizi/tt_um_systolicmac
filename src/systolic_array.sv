@@ -2,16 +2,16 @@ module systolic_array_4x4
     (input logic clk,
     input logic rst_n, clear,
     input logic start,
-    input logic [7:0] a_in [4][4], 
-    input logic [7:0] b_in [4][4],
-    output logic [19:0] acc [4][4],
+    input logic [3:0] a_in [4][4], 
+    input logic [3:0] b_in [4][4],
+    output logic [9:0] acc [4][4],
     output logic comp_done);
     
-    logic [7:0] a_wire [4][4];
-    logic [7:0] b_wire [4][4];
+    logic [3:0] a_wire [4][4];
+    logic [3:0] b_wire [4][4];
 
-    logic [7:0] boundary_a [3:0];
-    logic [7:0] boundary_b [3:0];
+    logic [3:0] boundary_a [3:0];
+    logic [3:0] boundary_b [3:0];
 
     logic [3:0] cnt;
     always_ff @(posedge clk or negedge rst_n) begin
@@ -26,10 +26,10 @@ module systolic_array_4x4
     genvar k;
     generate
         for (k = 0; k < 4; k++) begin : gen_boundary_a
-            assign boundary_a[k] = (cnt >= k && cnt - k < 4) ? a_in[k][cnt-k] : 8'd0;
+            assign boundary_a[k] = (cnt >= k && cnt - k < 4) ? a_in[k][cnt-k] : 4'd0;
         end
         for (k = 0; k < 4; k++) begin : gen_boundary_b
-            assign boundary_b[k] = (cnt >= k && cnt - k < 4) ? b_in[cnt-k][k] : 8'd0;
+            assign boundary_b[k] = (cnt >= k && cnt - k < 4) ? b_in[cnt-k][k] : 4'd0;
         end
     endgenerate
 

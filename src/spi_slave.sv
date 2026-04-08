@@ -1,8 +1,8 @@
 module spi_slave 
     (input logic clk, rst_n,
      input logic sck, mosi, cs,
-     output logic [7:0] a_out [4][4],
-     output logic [7:0] b_out [4][4],
+     output logic [3:0] a_out [4][4],
+     output logic [3:0] b_out [4][4],
      output logic load_done
     );
 
@@ -50,9 +50,9 @@ module spi_slave
                     if (byte_cnt == 0) begin
                         // ignore
                     end else if (byte_cnt < 17) begin
-                        a_out[(byte_cnt - 1) / 4][(byte_cnt - 1) % 4] <= shift_reg;
+                        a_out[(byte_cnt - 1) / 4][(byte_cnt - 1) % 4] <= shift_reg[3:0];
                     end else if (byte_cnt >= 17) begin
-                        b_out[(byte_cnt - 17) / 4][(byte_cnt - 17) % 4] <= shift_reg;
+                        b_out[(byte_cnt - 17) / 4][(byte_cnt - 17) % 4] <= shift_reg[3:0];
                     end
                 end
             end

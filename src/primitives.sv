@@ -3,7 +3,7 @@ module DFlipFlop
    input  logic preset_L, reset_L, clk,
    output logic q);
 
-  always_ff @(posedge clk, negedge preset_L, negedge reset_L)
+  always_ff @(posedge clk, negedge reset_L)
     if (~preset_L & reset_L)
       q <= 1'b1;
     else if (~reset_L & preset_L)
