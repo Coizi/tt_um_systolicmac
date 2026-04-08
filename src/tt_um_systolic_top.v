@@ -24,9 +24,9 @@ module tt_um_systolic_top (
 	assign cs = ui_in[2];
 	assign uio_out = 8'b00000000;
 	assign uio_oe = 8'b00000000;
-	wire [127:0] a_in;
-	wire [127:0] b_in;
-	wire [319:0] acc;
+	wire [63:0] a_in;
+	wire [63:0] b_in;
+	wire [159:0] acc;
 	wire load_done;
 	wire comp_done;
 	wire spi_done;

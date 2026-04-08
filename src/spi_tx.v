@@ -13,7 +13,7 @@ module spi_tx (
 	input wire sck;
 	input wire cs;
 	input wire spi_tx_en;
-	input wire [319:0] acc;
+	input wire [159:0] acc;
 	output wire miso;
 	output reg spi_done;
 	reg sck_curr;
@@ -54,10 +54,9 @@ module spi_tx (
 				byte_cnt <= 4'd0;
 			end
 			if ((falling_edge && !cs_sync) && spi_tx_en) begin
-				shift_reg[15:0] <= {shift_reg[14:0], 1'd0};
 				bit_cnt <= bit_cnt + 1;
 				if (bit_cnt == 0)
-					shift_reg <= acc[((((3 - (byte_cnt / 4)) * 4) + (3 - (byte_cnt % 4))) * 20) + 15-:16];
+					shift_reg <= {6'b000000, acc[(((3 - (byte_cnt / 4)) * 4) + (3 - (byte_cnt % 4))) * 10+:10]};
 				else
 					shift_reg <= {shift_reg[14:0], 1'b0};
 				if (bit_cnt == 7)

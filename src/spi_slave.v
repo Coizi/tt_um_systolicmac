@@ -13,8 +13,8 @@ module spi_slave (
 	input wire sck;
 	input wire mosi;
 	input wire cs;
-	output reg [127:0] a_out;
-	output reg [127:0] b_out;
+	output reg [63:0] a_out;
+	output reg [63:0] b_out;
 	output reg load_done;
 	wire sck_sync;
 	wire mosi_sync;
@@ -68,9 +68,9 @@ module spi_slave (
 					if (byte_cnt == 0)
 						;
 					else if (byte_cnt < 17)
-						a_out[(((3 - ((byte_cnt - 1) / 4)) * 4) + (3 - ((byte_cnt - 1) % 4))) * 8+:8] <= shift_reg;
+						a_out[(((3 - ((byte_cnt - 1) / 4)) * 4) + (3 - ((byte_cnt - 1) % 4))) * 4+:4] <= shift_reg[3:0];
 					else if (byte_cnt >= 17)
-						b_out[(((3 - ((byte_cnt - 17) / 4)) * 4) + (3 - ((byte_cnt - 17) % 4))) * 8+:8] <= shift_reg;
+						b_out[(((3 - ((byte_cnt - 17) / 4)) * 4) + (3 - ((byte_cnt - 17) % 4))) * 4+:4] <= shift_reg[3:0];
 				end
 			end
 		end

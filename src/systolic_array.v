@@ -12,14 +12,14 @@ module systolic_array_4x4 (
 	input wire rst_n;
 	input wire clear;
 	input wire start;
-	input wire [127:0] a_in;
-	input wire [127:0] b_in;
-	output wire [319:0] acc;
+	input wire [63:0] a_in;
+	input wire [63:0] b_in;
+	output wire [159:0] acc;
 	output wire comp_done;
-	wire [7:0] a_wire [0:3][0:3];
-	wire [7:0] b_wire [0:3][0:3];
-	wire [7:0] boundary_a [3:0];
-	wire [7:0] boundary_b [3:0];
+	wire [3:0] a_wire [0:3][0:3];
+	wire [3:0] b_wire [0:3][0:3];
+	wire [3:0] boundary_a [3:0];
+	wire [3:0] boundary_b [3:0];
 	reg [3:0] cnt;
 	always @(posedge clk or negedge rst_n)
 		if (!rst_n)
@@ -32,11 +32,11 @@ module systolic_array_4x4 (
 	generate
 		for (_gv_k_1 = 0; _gv_k_1 < 4; _gv_k_1 = _gv_k_1 + 1) begin : gen_boundary_a
 			localparam k = _gv_k_1;
-			assign boundary_a[k] = ((cnt >= k) && ((cnt - k) < 4) ? a_in[(((3 - k) * 4) + (3 - (cnt - k))) * 8+:8] : 8'd0);
+			assign boundary_a[k] = ((cnt >= k) && ((cnt - k) < 4) ? a_in[(((3 - k) * 4) + (3 - (cnt - k))) * 4+:4] : 4'd0);
 		end
 		for (_gv_k_1 = 0; _gv_k_1 < 4; _gv_k_1 = _gv_k_1 + 1) begin : gen_boundary_b
 			localparam k = _gv_k_1;
-			assign boundary_b[k] = ((cnt >= k) && ((cnt - k) < 4) ? b_in[(((3 - (cnt - k)) * 4) + (3 - k)) * 8+:8] : 8'd0);
+			assign boundary_b[k] = ((cnt >= k) && ((cnt - k) < 4) ? b_in[(((3 - (cnt - k)) * 4) + (3 - k)) * 4+:4] : 4'd0);
 		end
 	endgenerate
 	assign comp_done = cnt == 4'd9;
@@ -56,7 +56,7 @@ module systolic_array_4x4 (
 					.b_in((i == 0 ? boundary_b[j] : b_wire[i - 1][j])),
 					.a_out(a_wire[i][j]),
 					.b_out(b_wire[i][j]),
-					.acc(acc[(((3 - i) * 4) + (3 - j)) * 20+:20])
+					.acc(acc[(((3 - i) * 4) + (3 - j)) * 10+:10])
 				);
 			end
 		end
