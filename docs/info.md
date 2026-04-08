@@ -19,7 +19,7 @@ The design consists of five modules:
 
 The systolic dataflow works as follows: matrix A elements flow left-to-right across rows, matrix B elements flow top-to-bottom down columns. Each PE multiplies its registered A and B values and adds the product to its running accumulator. After 2N−1 = 7 counting cycles plus 2 pipeline flush cycles, all 16 accumulators hold the correct dot product results.
 
-## How to test
+## How to test -- adding lines for gds to work :D
 
 ### SPI interface
 
