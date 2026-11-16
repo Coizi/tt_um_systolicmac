@@ -95,8 +95,15 @@ python test/python_tester.py  # adjust COM port in script
 
 An SPI master is required (RP2040, Arduino, or similar). For FPGA testing a USB-UART bridge is used together with a UART shim module (not included in the TT submission).
 
-## Resources
+## Known issue in the taped-out revision
 
-- [Tiny Tapeout](https://tinytapeout.com)
-- [Discord community](https://tinytapeout.com/discord)
-- [Digital design lessons](https://tinytapeout.com/digital_design/)
+The GDS submitted to TTSKY26a contains an unreachable `CLEAR` state: `IDLE`
+transitions directly to `LOAD`, so `clear` never asserts and the PE
+accumulators are only cleared by `rst_n`. The chip therefore computes
+correctly on the first matrix multiply after a hardware reset and
+accumulates stale partial sums on every one after.
+
+Workaround on the taped-out part: assert `rst_n` between multiplies (with
+CS high and SCK idle, then wait a few system clocks before the next load).
+
+Fixed in RTL — `IDLE` now transitions to `CLEAR`.
