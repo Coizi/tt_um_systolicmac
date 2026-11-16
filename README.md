@@ -106,4 +106,6 @@ accumulates stale partial sums on every one after.
 Workaround on the taped-out part: assert `rst_n` between multiplies (with
 CS high and SCK idle, then wait a few system clocks before the next load).
 
-Fixed in RTL — `IDLE` now transitions to `CLEAR`.
+The RTL in this repository is the as-submitted revision, left unmodified so
+that it matches the fabricated design. The fix is a single line: `IDLE`
+should transition to `CLEAR` rather than directly to `LOAD`.
