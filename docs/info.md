@@ -13,7 +13,7 @@ The design consists of five modules:
 
 - **pe** — Processing element. Each PE contains two 4-bit pass-through registers and a 10-bit accumulator. On each clock cycle (when enabled), it latches inputs into internal registers, passes them to neighboring PEs, and accumulates the product of the registered values. 16 PEs are arranged in a 4×4 grid.
 - **systolic_array_4x4** — The array top-level. Contains the 16 PEs connected in a grid, boundary feeding logic that skews matrix inputs using a cycle counter (row i of A is delayed by i cycles, column j of B is delayed by j cycles), and a done signal that asserts when the computation is complete (after 9 cycles: 2N−1 = 7 active cycles plus 2 pipeline flush cycles).
-- **control_fsm** — A 5-state FSM (IDLE → CLEAR → LOAD → COMPUTE → DRAIN) that sequences the operation. It waits for the SPI slave to finish loading matrices, clears accumulators, starts the array, and then enables result transmission.
+- **control_fsm** — A 5-state FSM (IDLE → CLEAR → LOAD → COMPUTE → DRAIN) that sequences the operation. It waits for the SPI slave to finish loading matrices, starts the array, and then enables result transmission. Note: in the fabricated revision the `CLEAR` state is unreachable — see the known-issue note in the README.
 - **spi_slave** — Deserializes 33 incoming SPI bytes (1 command byte + 16 bytes for matrix A + 16 bytes for matrix B) into two 4×4 unpacked arrays and asserts `load_done` when complete.
 - **spi_tx** — Serializes the 16 accumulator outputs (10 bits each, transmitted as 2 bytes: 6 zero bits followed by the 10-bit value, MSB first) back to the host over SPI MISO.
 
