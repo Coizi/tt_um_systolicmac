@@ -1,7 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(grep -E \"\\\\.\\(v|sv|py|yaml|md|txt\\)$\")"
-    ]
-  }
-}
